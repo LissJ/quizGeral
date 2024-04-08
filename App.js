@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Modal, Alert } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
+
 
 
 const charadas = [
@@ -81,6 +84,8 @@ const charadas = [
 ];
 
 const App = () => {
+
+  const navigation = useNavigation();
 
   const [round, setRound] = useState(0);
   const [acertos, setAcertos] = useState(0);
@@ -167,62 +172,109 @@ const App = () => {
   };
 
   return (
-    
-    <View style={styles.container}>
-      <Text style={styles.pergunta}>
-        {charadasSelecionadas.length > 0
-          ? charadasSelecionadas[round].pergunta
-          : "Carregando..."}
-      </Text>
-      {charadasSelecionadas.length > 0 &&
-        charadasSelecionadas[round].alternativas.map((alternativa, index) => (
-          <TouchableOpacity
-            key={index}
-            style={[
-              styles.botao,
-              {
-                backgroundColor:
-                  respostaSelecionada === alternativa
-                    ? respostaCorreta
-                      ? '#719257'
-                      : '#E1374C'
-                    : '#3C4146',
-              },
-            ]}
-            onPress={() => responder(alternativa)}
-            disabled={respostaSelecionada !== null}
-          >
-            <Text style={styles.textoBotao}>{alternativa}</Text>
-          </TouchableOpacity>
-        ))}
-      <Modal
-        animationType="fade"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => setModalVisible(false)}
-      >
-        <View style={styles.modalView}>
-          <Text style={styles.modalText}>{mensagemModal}</Text>
-          <TouchableOpacity
-            style={[styles.botaoOk, { backgroundColor: '#3C4146' }]}
-            onPress={proximaCharada}
-          >
-            <Text style={styles.textoBotao}>OK</Text>
-          </TouchableOpacity>
-        </View>
-      </Modal>
+
+    <View style={styles.header}>
+      <View style={styles.container}>
+        <Text style={styles.jogos}>
+          Quiz Geral
+        </Text>
+        <Ionicons name="home-outline" style={ESTILO.iconeHome} onPress={toHome} />
+        <Text style={styles.resumoJogos}>
+          Uma atividade que envolve perguntas rápidas e diretas sobre uma variedade de temas para testar o conhecimento dos participantes.
+        </Text>
+      </View>
+      <View style={styles.central}>
+        <Text style={styles.pergunta}>
+          {charadasSelecionadas.length > 0
+            ? charadasSelecionadas[round].pergunta
+            : "Carregando..."}
+        </Text>
+        {charadasSelecionadas.length > 0 &&
+          charadasSelecionadas[round].alternativas.map((alternativa, index) => (
+            <TouchableOpacity
+              key={index}
+              style={[
+                styles.botao,
+                {
+                  backgroundColor:
+                    respostaSelecionada === alternativa
+                      ? respostaCorreta
+                        ? '#719257'
+                        : '#E1374C'
+                      : '#fff',
+                },
+              ]}
+              onPress={() => responder(alternativa)}
+              disabled={respostaSelecionada !== null}
+            >
+              <Text style={styles.textoBotao}>{alternativa}</Text>
+            </TouchableOpacity>
+          ))}
+        <Modal
+          animationType="fade"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => setModalVisible(false)}
+        >
+          <View style={styles.modalView}>
+            <Text style={styles.modalText}>{mensagemModal}</Text>
+            <TouchableOpacity
+              style={[styles.botaoOk, { backgroundColor: '#3C4146' }]}
+              onPress={proximaCharada}
+            >
+              <Text style={styles.textoBotaoOk}>OK</Text>
+            </TouchableOpacity>
+          </View>
+        </Modal>
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: '#fff',
+    height: 200,
+    // flex: 0.7,
+    borderBottomLeftRadius: 50,
+    borderBottomRightRadius: 50,
     paddingHorizontal: 20,
   },
+  jogos: {
+    marginTop: 50,
+    marginLeft: 15,
+    fontSize: 23,
+    fontWeight: '800',
+    color: '#34393E'
+  },
+  iconeHome: {
+    fontSize: 30,
+    marginLeft: 155,
+    color: "#34393E"
+  },
+  resumoJogos: {
+    marginTop: 10,
+    marginLeft: 15,
+    marginRight: 15,
+    fontSize: 16,
+    fontWeight: '500',
+    color: '#34393E'
+  },
+  central: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    display: 'flex',
+    flex: 1,
+    backgroundColor: '#3C4146'
+  },
+  header: {
+    justifyContent: 'center',
+    display: 'flex',
+    flex: 1,
+    backgroundColor: '#3C4146'
+  },
   pergunta: {
+    color: '#fff',
     fontSize: 20,
     marginBottom: 22,
     textAlign: 'center',
@@ -254,11 +306,15 @@ const styles = StyleSheet.create({
     marginRight: 25,
   },
   textoBotao: {
-    color: 'white',
-
+    color: '#000',
+    fontSize: 15
+  },
+  textoBotaoOk: {
+    color: '#fff',
     fontSize: 15
   },
   modalView: {
+    backgroundColor: '#DADADA',
     position: 'absolute',
     bottom: 0,
     left: 0,
@@ -272,11 +328,13 @@ const styles = StyleSheet.create({
       height: -2,
       border: '1px solid #d3d3d3'
     },
-    shadowOpacity: 0.25,
+    shadowOpacity: 1,
     shadowRadius: 4,
     elevation: 5,
   },
   modalText: {
+    color: '#3C4146',
+    fontWeight: '500',
     marginTop: 17,
     marginBottom: 15,
     textAlign: 'center',
