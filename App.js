@@ -4,7 +4,6 @@ import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 
 
-
 const charadas = [
   {
     pergunta: 'Qual é a capital do Brasil?',
@@ -177,8 +176,14 @@ const App = () => {
       <View style={styles.container}>
         <Text style={styles.jogos}>
           Quiz Geral
+          <View style={styles.iconeHome}>
+            <Ionicons name="home-outline" 
+            style={styles.iconeInicio}
+            onPress={toHome} 
+            />
+          </View>
         </Text>
-        <Ionicons name="home-outline" style={ESTILO.iconeHome} onPress={toHome} />
+
         <Text style={styles.resumoJogos}>
           Uma atividade que envolve perguntas rápidas e diretas sobre uma variedade de temas para testar o conhecimento dos participantes.
         </Text>
@@ -248,8 +253,16 @@ const styles = StyleSheet.create({
     color: '#34393E'
   },
   iconeHome: {
-    fontSize: 30,
-    marginLeft: 155,
+    fontSize: 27,
+    // marginLeft: 155,
+    marginLeft: 160,
+    color: "#34393E"
+  },
+  iconeInicio: {
+    fontSize: 24,
+    marginTop: 5,
+    // marginLeft: 155,
+    marginLeft: 160,
     color: "#34393E"
   },
   resumoJogos: {
