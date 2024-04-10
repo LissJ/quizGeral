@@ -131,7 +131,6 @@ const App = () => {
     if (round < charadasSelecionadas.length - 1) {
       setRound(round + 1);
     } else {
-      // Fim do jogo
       Alert.alert(
         'VitaMental',
         `Fim do jogo!\nAcertos: ${acertos}\nErros: ${erros}`,
@@ -163,7 +162,7 @@ const App = () => {
             }
           }
         ]
-      ); // <-- Faltava fechar aqui
+      );
     }
     setRespostaSelecionada(null);
     setRespostaCorreta(null);
@@ -185,7 +184,7 @@ const App = () => {
         </Text>
 
         <Text style={styles.resumoJogos}>
-          Uma atividade que envolve perguntas rápidas e diretas sobre uma variedade de temas para testar o conhecimento dos participantes.
+          Uma atividade que envolve perguntas rápidas e diretas sobre uma variedade de temas para testar o conhecimento do jogador.
         </Text>
       </View>
       <View style={styles.central}>
